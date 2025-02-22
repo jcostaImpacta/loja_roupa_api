@@ -1,20 +1,26 @@
 from fastapi import FastAPI
 from database import engine
 from models import Base
+from fastapi.middleware.cors import CORSMiddleware
+from config import URL_FRONT
 import routes
 import uvicorn
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=URL_FRONT, 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Criar as tabelas automaticamente
 Base.metadata.create_all(bind=engine)
 
 # Incluir rotas
 app.include_router(routes.router)
-
-@app.get("/")
-def home():
-    return {"mensagem": "API da Loja de Roupas está rodando!"}
 
 
 if __name__ == "__main__":
