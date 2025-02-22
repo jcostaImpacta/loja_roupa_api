@@ -1,8 +1,6 @@
-# Django==4.2
-# djangorestframework==3.14.0
-# mysqlclient==2.1.1  # Se estiver usando MySQL
-fastapi
+fastapi[all]
 uvicorn
 sqlalchemy
 pyodbc
 pydantic
+python-multipart

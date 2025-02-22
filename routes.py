@@ -1,12 +1,17 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, Form
 from sqlalchemy.orm import Session
 from database import get_db
-from models import Usuario
-from schemas.usuario_schema import UsuarioSchema
-
+from services.user_service import UserService
+ 
+ 
 router = APIRouter()
-
-#login
-@router.get("/get_usuario", response_model=list[UsuarioSchema])
-def get_produtos(db: Session = Depends(get_db)):
-    return db.query(Usuario).all()
+ 
+ 
+@router.post("/login/")
+def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
+    user = UserService.validate_user(db, username, password)
+   
+    if not user:
+            raise HTTPException(status_code=401, detail="Usuário ou senha inválidos")
+   
+    return {"status": "success", "message": "Login realizado com sucesso"}
