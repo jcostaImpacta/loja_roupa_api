@@ -6,6 +6,10 @@ from services.user_service import UserService
 
 router = APIRouter()
 
+@router.post("/create_usuario/")
+def login(username: str = Form(...), password: str = Form(...), email:str  = Form(...), userDescription: str = Form(...), db: Session = Depends(get_db)):
+   
+    return {"status": "success", "message": "Cadastro Realizado com sucesso"}
 
 @router.post("/login/")
 def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
