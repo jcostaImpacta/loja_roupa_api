@@ -17,17 +17,16 @@ def login(username: str = Form(...), password: str = Form(...), db: Session = De
    
     return {"status": "success", "message": "Login realizado com sucesso"}
 
-@router.post('/create_usuario/')
-def create_usuario(userDescription: str = Form(...), password: str = Form(...), email: str = Form(...), username: str = Form(...), db: Session = Depends(get_db)):
+@router.post('/create_user/')
+def create_user(userDescription: str = Form(...), password: str = Form(...), email: str = Form(...), username: str = Form(...), db: Session = Depends(get_db)):
   
 
     if not userDescription or not password or not email or not username:
         raise HTTPException(status_code=400, detail= "Nome, senha, email e código são obrigatórios!")
     
-    novo_usuario = Usuario(dc_usuario=userDescription, cd_senha=password, dc_email=email, cd_usuario=username)
-    result = UserService.create_user(db, novo_usuario)  
+    new_user = Usuario(dc_usuario=userDescription, cd_senha=password, dc_email=email, cd_usuario=username)
+    result = UserService.create_user(db, new_user)  
 
-   
     if result == None:
         raise HTTPException(status_code=400, detail= f"Usuário {username} já existe!")
     

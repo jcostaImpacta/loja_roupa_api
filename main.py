@@ -16,10 +16,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
  
-# Criar as tabelas automaticamente
 Base.metadata.create_all(bind=engine)
  
-# Incluir rotas
 app.include_router(routes.router)
  
  
