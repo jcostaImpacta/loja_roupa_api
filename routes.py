@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Form
+from typing import Optional
+from fastapi import APIRouter, Depends, HTTPException, Form, Query
 from sqlalchemy.orm import Session
 from database import get_db
 from services.user_service import UserService
 from services.product_service import ProductService
-from schemas.produto_schema import ProdutoSchema
+from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema
 from models import Usuario
  
  
@@ -34,9 +35,21 @@ def create_user(userDescription: str = Form(...), password: str = Form(...), ema
     
     return {"status": "success", "message": "Usuário cadastrado com sucesso!"}
 
-@router.get("/get_products/",response_model=list[ProdutoSchema])
-def get_products(db: Session = Depends(get_db)):
+@router.post("/get_products/", response_model=list[ProdutoSchema])
+def get_products(
+    filtros: FiltroProdutoSchema,
+    db: Session = Depends(get_db)
+):
+   
     products = ProductService.get_products(db)
    
     return products
+    
+@router.post("/list/categoria", response_model=list[CategoriaSchema])
+def get_categorias(
+    db: Session = Depends(get_db)
+):
+    categorias = ProductService.get_categorias(db)
+   
+    return categorias
     

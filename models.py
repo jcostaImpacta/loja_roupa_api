@@ -63,3 +63,9 @@ class Produtos(Base):
     # @property
     # def dc_colecao(self):
     #     return self.colecao.dc_colecao if self.colecao else None
+
+class Categoria(Base):
+    __tablename__ =  "T_CATEGORIA"
+
+    id_categoria = Column(Integer, primary_key=True)
+    dc_categoria = Column(String(50), nullable=False)

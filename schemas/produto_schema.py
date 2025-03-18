@@ -18,3 +18,13 @@ class ProdutoSchema(BaseModel):
 
     class Config:
         from_attributes = True
+
+class FiltroProdutoSchema(BaseModel):
+    categoria: Optional[str] = None
+    publico: Optional[str] = None
+    genero: Optional[str] = None
+    colecao: Optional[str] = None
+
+class CategoriaSchema(BaseModel):
+    id_categoria: int
+    dc_categoria: int

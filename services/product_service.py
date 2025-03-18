@@ -10,6 +10,11 @@ class ProductService:
         products = ProductRepository.get_products(db)
         return products
     
+    @staticmethod
+    def get_categorias(db: Session):
+        categorias = ProductRepository.get_categorias(db)
+        return categorias
+    
     # @staticmethod
     # def create_user(db: Session, user: Usuario):
     #     user_db = UserRepository.get_user_by_username(db, user.cd_usuario)
