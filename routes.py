@@ -41,7 +41,7 @@ def get_products(
 ):
     products = ProductService.get_products(db, filtros)
     return products
-    
+
 @router.get("/list/categoria/", response_model=list[CategoriaSchema])
 def get_categorias(
     db: Session = Depends(get_db)

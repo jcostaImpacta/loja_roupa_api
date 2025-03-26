@@ -3,9 +3,6 @@ from models import Produtos, Categoria, Publico
 from schemas.produto_schema import FiltroProdutoSchema
  
 class ProductRepository:
-    # @staticmethod
-    # def get_products(db: Session):
-    #     return db.query(Produtos)
     
     @staticmethod
     def get_categorias(db: Session):

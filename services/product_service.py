@@ -1,7 +1,5 @@
 from sqlalchemy.orm import Session
-import hashlib
 from repositories.product_repository import ProductRepository
-from models import Usuario
  
 class ProductService:
  
