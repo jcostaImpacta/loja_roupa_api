@@ -1,6 +1,7 @@
 fastapi[all]
+fastapi[all]
 uvicorn
 sqlalchemy
 pyodbc
 pydantic
-python-multipart
+python-multipartpython-multipart
