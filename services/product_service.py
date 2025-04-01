@@ -1,11 +1,12 @@
 from sqlalchemy.orm import Session
 from repositories.product_repository import ProductRepository
+from schemas.produto_schema import FiltroProdutoSchema
  
 class ProductService:
  
     @staticmethod
-    def get_products(db: Session, categoria: int = None):
-        return ProductRepository.get_products(db, categoria)
+    def get_products(db: Session, filtros: int = None):
+        return ProductRepository.get_products(db, filtros)
     
     @staticmethod
     def get_categorias(db: Session):
