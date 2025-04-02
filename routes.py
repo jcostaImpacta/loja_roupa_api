@@ -4,9 +4,8 @@ from database import get_db
 from services.user_service import UserService
 from services.user_service import UserService
 from services.product_service import ProductService
-from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema
+from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema
 from models import Usuario
-
 
  
  
@@ -61,3 +60,19 @@ def get_publicos(
     categorias = ProductService.get_publicos(db)
    
     return categorias
+
+@router.get("/list/genero/", response_model=list[GeneroSchema])
+def get_generos(
+    db: Session = Depends(get_db)
+):
+    generos = ProductService.get_generos(db)
+   
+    return generos
+
+@router.get("/list/colecao/", response_model=list[ColecaoSchema])
+def get_colecoes(
+    db: Session = Depends(get_db)
+):
+    colecoes = ProductService.get_colecoes(db)
+   
+    return colecoes

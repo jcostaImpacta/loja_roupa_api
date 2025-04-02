@@ -36,3 +36,15 @@ class Publico(Base):
 
     id_publico = Column(Integer, primary_key=True)
     dc_publico = Column(String(50), nullable=False)
+
+class Genero(Base):
+    __tablename__ =  "T_GENERO"
+
+    id_genero = Column(Integer, primary_key=True)
+    dc_genero = Column(String(50), nullable=False)
+
+class Colecao(Base):
+    __tablename__ =  "T_COLECAO"
+
+    id_colecao = Column(Integer, primary_key=True)
+    dc_colecao = Column(String(50), nullable=False)
