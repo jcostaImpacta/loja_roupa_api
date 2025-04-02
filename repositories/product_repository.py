@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Produtos, Categoria, Publico
+from models import Produtos, Categoria, Publico, Genero, Colecao
 from schemas.produto_schema import FiltroProdutoSchema
  
 class ProductRepository:
@@ -11,6 +11,14 @@ class ProductRepository:
     @staticmethod
     def get_publicos(db: Session):
         return db.query(Publico)
+    
+    @staticmethod
+    def get_generos(db: Session):
+        return db.query(Genero)
+    
+    @staticmethod
+    def get_colecoes(db: Session):
+        return db.query(Colecao)
     
     @staticmethod
     def get_products(db: Session, filtros: FiltroProdutoSchema):

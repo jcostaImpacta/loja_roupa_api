@@ -18,6 +18,12 @@ class ProductService:
         publicos = ProductRepository.get_publicos(db)
         return publicos
         
-        
+    @staticmethod
+    def get_generos(db: Session):
+        generos = ProductRepository.get_generos(db)
+        return generos
     
-   
+    @staticmethod
+    def get_colecoes(db: Session):
+        colecoes = ProductRepository.get_colecoes(db)
+        return colecoes

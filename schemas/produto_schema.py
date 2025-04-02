@@ -30,3 +30,11 @@ class CategoriaSchema(BaseModel):
 class PublicoSchema(BaseModel):
     id_publico: int
     dc_publico: str
+
+class GeneroSchema(BaseModel):
+    id_genero: int
+    dc_genero: str
+
+class ColecaoSchema(BaseModel):
+    id_colecao: int
+    dc_colecao: str
