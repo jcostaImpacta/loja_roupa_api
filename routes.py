@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Form, HTTPException, Form
+from fastapi import APIRouter, Depends, HTTPException, Form, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db
-from services.user_service import UserService
 from services.user_service import UserService
 from services.product_service import ProductService
 from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema
 from models import Usuario
+from fastapi import Body
 
 
  
@@ -39,7 +39,7 @@ def create_user(userDescription: str = Form(...), password: str = Form(...), ema
 
 @router.post("/get_products/", response_model=list[ProdutoSchema])
 def get_products(
-    filtros: FiltroProdutoSchema,
+    filtros: FiltroProdutoSchema = Body(...),
     db: Session = Depends(get_db)
 ):
     products = ProductService.get_products(db, filtros)
@@ -61,3 +61,13 @@ def get_publicos(
     categorias = ProductService.get_publicos(db)
    
     return categorias
+
+@router.get("/product/min_max_price/")
+def get_min_max_price(db: Session = Depends(get_db)):
+    result = ProductService.get_min_max_price(db)
+
+    if not result or result.get("preco_min") is None or result.get("preco_max") is None:
+        raise HTTPException(status_code=404, detail="Nenhum preço encontrado")
+
+    return result
+
