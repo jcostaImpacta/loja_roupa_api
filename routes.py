@@ -39,7 +39,7 @@ def create_user(userDescription: str = Form(...), password: str = Form(...), ema
 
 @router.post("/get_products/", response_model=list[ProdutoSchema])
 def get_products(
-    filtros: FiltroProdutoSchema = Body(...),
+    filtros: FiltroProdutoSchema,
     db: Session = Depends(get_db)
 ):
     products = ProductService.get_products(db, filtros)
@@ -62,7 +62,7 @@ def get_publicos(
    
     return categorias
 
-@router.get("/product/min_max_price/", response_model=MinMaxPriceSchema)
+@router.get("/list/min_max_price/", response_model=MinMaxPriceSchema)
 def get_min_max_price(db: Session = Depends(get_db)):
     result = ProductService.get_min_max_price(db)
 
