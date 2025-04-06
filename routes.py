@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from services.user_service import UserService
 from services.product_service import ProductService
-from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema
+from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema
 from models import Usuario
 from fastapi import Body
 
@@ -71,3 +71,29 @@ def get_min_max_price(db: Session = Depends(get_db)):
 
     return result
 
+
+@router.get("/product/min_max_price/")
+def get_min_max_price(db: Session = Depends(get_db)):
+    result = ProductService.get_min_max_price(db)
+
+    if not result or result.get("preco_min") is None or result.get("preco_max") is None:
+        raise HTTPException(status_code=404, detail="Nenhum preço encontrado")
+
+    return result
+
+
+@router.get("/list/genero/", response_model=list[GeneroSchema])
+def get_generos(
+    db: Session = Depends(get_db)
+):
+    generos = ProductService.get_generos(db)
+   
+    return generos
+
+@router.get("/list/colecao/", response_model=list[ColecaoSchema])
+def get_colecoes(
+    db: Session = Depends(get_db)
+):
+    colecoes = ProductService.get_colecoes(db)
+   
+    return colecoes
