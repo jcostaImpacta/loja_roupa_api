@@ -16,10 +16,10 @@ class ProdutoSchema(BaseModel):
         from_attributes = True
 
 class FiltroProdutoSchema(BaseModel):
-    categoria: Optional[str] = None
-    publico: Optional[str] = None
-    genero: Optional[str] = None
-    colecao: Optional[str] = None
+    categoria: Optional[int] = None
+    publico: Optional[int] = None
+    genero: Optional[int] = None
+    colecao: Optional[int] = None
     valor_min: Optional[float] = None
     valor_max: Optional[float] = None
 
@@ -38,3 +38,9 @@ class GeneroSchema(BaseModel):
 class ColecaoSchema(BaseModel):
     id_colecao: int
     dc_colecao: str
+
+
+class MinMaxPriceSchema(BaseModel):
+    preco_min: float
+    preco_max: float
+    

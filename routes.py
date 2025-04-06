@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Form, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Form, HTTPException, Body
 from sqlalchemy.orm import Session
 from database import get_db
 from services.user_service import UserService
 from services.product_service import ProductService
-from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema
+from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema, MinMaxPriceSchema
 from models import Usuario
-from fastapi import Body
+
 
 
  
@@ -62,22 +62,12 @@ def get_publicos(
    
     return categorias
 
-@router.get("/product/min_max_price/")
+@router.get("/product/min_max_price/", response_model=MinMaxPriceSchema)
 def get_min_max_price(db: Session = Depends(get_db)):
     result = ProductService.get_min_max_price(db)
 
-    if not result or result.get("preco_min") is None or result.get("preco_max") is None:
-        raise HTTPException(status_code=404, detail="Nenhum preço encontrado")
-
-    return result
-
-
-@router.get("/product/min_max_price/")
-def get_min_max_price(db: Session = Depends(get_db)):
-    result = ProductService.get_min_max_price(db)
-
-    if not result or result.get("preco_min") is None or result.get("preco_max") is None:
-        raise HTTPException(status_code=404, detail="Nenhum preço encontrado")
+    if result is None:
+        raise HTTPException(status_code=404, detail="Erro ao buscar preço")
 
     return result
 

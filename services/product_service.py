@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from repositories.product_repository import ProductRepository
 from schemas.produto_schema import FiltroProdutoSchema
-from sqlalchemy import func
 from models import Produtos
  
 class ProductService:
@@ -23,17 +22,17 @@ class ProductService:
     @staticmethod
     def get_generos(db: Session):
         generos = ProductRepository.get_generos(db)
-    def get_min_max_price(db: Session):
-        result = db.query(
-            func.min(Produtos.vl_produto).label("preco_min"),
-            func.max(Produtos.vl_produto).label("preco_max")
-    ).first()
-
-        if result:
-            return {"preco_min": result.preco_min, "preco_max": result.preco_max}
-        else:
-            return None
         return generos
+
+    
+    @staticmethod
+    def get_min_max_price(db: Session):
+        result = ProductRepository.get_min_max_price(db)
+
+        result["preco_min"] = result["preco_min"] or 0
+        result["preco_max"] = result["preco_max"] or 300
+        return result
+        
     
     @staticmethod
     def get_colecoes(db: Session):

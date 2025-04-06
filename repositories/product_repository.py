@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from models import Produtos, Categoria, Publico, Genero, Colecao
 from schemas.produto_schema import FiltroProdutoSchema
+from sqlalchemy import func
+from collections import namedtuple
  
 class ProductRepository:
     
@@ -42,3 +44,26 @@ class ProductRepository:
             query = query.filter(Produtos.vl_produto <= filtros.valor_max)
 
         return query.all()
+    
+    @staticmethod
+    def get_min_max_price(db: Session):
+        result = (
+        db.query(
+            func.min(Produtos.vl_produto).label("preco_min"),
+            func.max(Produtos.vl_produto).label("preco_max")
+        )
+        .first()
+        )
+
+        FaixaPreco = namedtuple("FaixaPreco", ["preco_min", "preco_max"])
+
+        if result is None or result[0] is None and result[1] is None:
+                faixa = FaixaPreco(None, None)
+        else:
+            faixa = FaixaPreco(*result)
+
+        return {
+            "preco_min": faixa.preco_min,
+            "preco_max": faixa.preco_max
+    }
+            

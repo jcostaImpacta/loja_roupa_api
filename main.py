@@ -3,21 +3,9 @@ from database import engine
 from models import Base
 from fastapi.middleware.cors import CORSMiddleware
 from config import URL_FRONT
-from config import conectar_sql_server
 import routes
 import uvicorn
 
-conn = conectar_sql_server()
-
-if conn:
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM T_USUARIO")
-    resultados = cursor.fetchall()
-    
-    for linha in resultados:
-        print(linha)
-
-    conn.close()
  
 app = FastAPI()
 
