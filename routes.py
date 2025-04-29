@@ -4,6 +4,7 @@ from database import get_db
 from services.user_service import UserService
 from services.product_service import ProductService
 from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema, MinMaxPriceSchema
+from schemas.user_schema import  UsuarioInfoSchema
 from models import Usuario
 
 
@@ -13,14 +14,14 @@ from models import Usuario
 router = APIRouter()
  
 
-@router.post("/login/")
+@router.post("/login/", response_model=UsuarioInfoSchema)
 def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = UserService.validate_user(db, username, password)
     
     if not user:
             raise HTTPException(status_code=401, detail="Usuário ou senha inválidos")
-    
-    return {"status": "success", "message": "Login realizado com sucesso"}
+
+    return user
 
 @router.post('/create_user/')
 def create_user(userDescription: str = Form(...), password: str = Form(...), email: str = Form(...), username: str = Form(...), db: Session = Depends(get_db)):
