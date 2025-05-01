@@ -6,6 +6,7 @@ from config import URL_FRONT
 import routes
 import uvicorn
 
+
  
 app = FastAPI()
 

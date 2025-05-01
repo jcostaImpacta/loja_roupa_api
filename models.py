@@ -1,6 +1,11 @@
-from sqlalchemy import Boolean, Column, Integer, Numeric, String, ForeignKey, DECIMAL
+from sqlalchemy import Boolean, Column, Integer, Numeric, String, Float, ForeignKey, DECIMAL
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import DateTime
+from datetime import datetime
+from datetime import datetime, timezone
+from database import Base
+
 
 Base = declarative_base()
 
@@ -48,3 +53,18 @@ class Colecao(Base):
 
     id_colecao = Column(Integer, primary_key=True)
     dc_colecao = Column(String(50), nullable=False)
+
+class Order(Base):
+    __tablename__ = 'T_ORDEM'
+
+    cd_ordem = Column(Integer, primary_key=True, autoincrement=True)
+    cd_usuario = Column(Integer, nullable=False)
+    vl_total = Column(Float, nullable=False)
+    qtd_total = Column(Integer, nullable=False)
+    dt_venda = Column(DateTime, nullable=False)
+    
+    
+    usuario = relationship('Usuario', backref='ordens')
+
+    def __repr__(self):
+        return f"<Order(cd_ordem={self.cd_ordem}, cd_usuario={self.cd_usuario}, vl_total={self.vl_total}, qtd_total={self.qtd_total}, dt_venda={self.dt_venda})>"

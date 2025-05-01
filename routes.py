@@ -6,6 +6,8 @@ from services.product_service import ProductService
 from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema, MinMaxPriceSchema
 from schemas.user_schema import  UsuarioInfoSchema
 from models import Usuario
+from schemas.order_schema import OrderSchema, OrderResultSchema
+from services.order_service import criar_ordem_service
 
 
 
@@ -88,3 +90,14 @@ def get_colecoes(
     colecoes = ProductService.get_colecoes(db)
    
     return colecoes
+
+@router.post("/new_order", response_model=OrderResultSchema)
+def criar_ordem_endpoint(order_data: OrderSchema, db: Session = Depends(get_db)):
+    try:
+        nova_ordem = criar_ordem_service(order_data, db)  # Passando db para o serviço
+        return nova_ordem
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
