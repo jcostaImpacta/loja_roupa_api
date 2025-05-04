@@ -4,7 +4,10 @@ from database import get_db
 from services.user_service import UserService
 from services.product_service import ProductService
 from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, ProdutoSchema, PublicoSchema, GeneroSchema, ColecaoSchema, MinMaxPriceSchema
+from schemas.user_schema import  UsuarioInfoSchema
 from models import Usuario
+from schemas.order_schema import OrderSchema, OrderResultSchema
+from services.order_service import OrderService
 
 
 
@@ -13,14 +16,14 @@ from models import Usuario
 router = APIRouter()
  
 
-@router.post("/login/")
+@router.post("/login/", response_model=UsuarioInfoSchema)
 def login(username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db)):
     user = UserService.validate_user(db, username, password)
     
     if not user:
             raise HTTPException(status_code=401, detail="Usuário ou senha inválidos")
-    
-    return {"status": "success", "message": "Login realizado com sucesso"}
+
+    return user
 
 @router.post('/create_user/')
 def create_user(userDescription: str = Form(...), password: str = Form(...), email: str = Form(...), username: str = Form(...), db: Session = Depends(get_db)):
@@ -87,3 +90,14 @@ def get_colecoes(
     colecoes = ProductService.get_colecoes(db)
    
     return colecoes
+
+@router.post("/new_order", response_model=OrderResultSchema)
+def new_order(order_data: OrderSchema, db: Session = Depends(get_db)):
+    try:
+        nova_ordem = OrderService.new_ordem(order_data, db)
+        return nova_ordem
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
