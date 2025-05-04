@@ -57,14 +57,8 @@ class Colecao(Base):
 class Order(Base):
     __tablename__ = 'T_ORDEM'
 
-    cd_ordem = Column(Integer, primary_key=True, autoincrement=True)
-    cd_usuario = Column(Integer, nullable=False)
-    vl_total = Column(Float, nullable=False)
-    qtd_total = Column(Integer, nullable=False)
-    dt_venda = Column(DateTime, nullable=False)
-    
-    
-    usuario = relationship('Usuario', backref='ordens')
-
-    def __repr__(self):
-        return f"<Order(cd_ordem={self.cd_ordem}, cd_usuario={self.cd_usuario}, vl_total={self.vl_total}, qtd_total={self.qtd_total}, dt_venda={self.dt_venda})>"
+    id_ordem = Column(Integer, primary_key=True, autoincrement=True)
+    cd_usuario = Column(String(20), nullable=False)
+    vl_total_ordem = Column(Float, nullable=False)
+    qtd_total_produto = Column(Integer, nullable=False)
+    dt_ordem = Column(DateTime, nullable=False)

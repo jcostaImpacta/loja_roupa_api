@@ -1,27 +1,25 @@
-from datetime import datetime, timezone
+from datetime import datetime
+import pytz
 from schemas.order_schema import OrderSchema
-from schemas.order_result_schema import OrderResultSchema  
-from repositories.order_repository import criar_ordem
+from repositories.order_repository import OrderRepository
 from models import Order
 from sqlalchemy.orm import Session
 
 
-def criar_ordem_service(order_data: OrderSchema, db: Session) -> OrderResultSchema:
-    data_venda = datetime.now(timezone.utc)
+class OrderService:
 
-    nova_ordem = Order(
-        cd_usuario=order_data.cd_usuario,
-        vl_total=order_data.vl_total,
-        qtd_total=order_data.qtd_total,
-        dt_venda=data_venda
-    )
+    @staticmethod
+    def new_ordem(order_data: OrderSchema, db: Session):
+        fuso_brasilia = pytz.timezone("America/Sao_Paulo")
+        dt_ordem = datetime.now(fuso_brasilia)
 
-    ordem_criada = criar_ordem(db, nova_ordem)
+        nova_ordem = Order(
+            cd_usuario=order_data.cd_usuario,
+            vl_total_ordem=order_data.vl_total_ordem,
+            qtd_total_produto=order_data.qtd_total_produto,
+            dt_ordem=dt_ordem
+        )
 
-    return OrderResultSchema(
-        cd_ordem=ordem_criada.cd_ordem,
-        cd_usuario=ordem_criada.cd_usuario,
-        vl_total=ordem_criada.vl_total,
-        qtd_total=ordem_criada.qtd_total,
-        dt_venda=ordem_criada.dt_venda
-    )
+        ordem_criada = OrderRepository.criar_ordem(db, nova_ordem)
+
+        return ordem_criada

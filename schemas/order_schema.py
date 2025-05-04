@@ -2,21 +2,19 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class OrderSchema(BaseModel):
-    cd_usuario: int
-    vl_total: float
-    qtd_total: int
+    cd_usuario: str
+    vl_total_ordem: float
+    qtd_total_produto: int
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        from_attributes = True
 
 class OrderResultSchema(BaseModel):
-    cd_ordem: int
-    cd_usuario: int
-    vl_total: float
-    qtd_total: int
-    dt_venda: datetime
+    id_ordem: int
+    cd_usuario: str
+    vl_total_ordem: float
+    qtd_total_produto: int
+    dt_ordem: datetime
 
-    model_config = {
-        "from_attributes": True
-    }
+    class Config:
+        from_attributes = True

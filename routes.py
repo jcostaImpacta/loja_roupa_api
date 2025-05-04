@@ -7,7 +7,7 @@ from schemas.produto_schema import CategoriaSchema, FiltroProdutoSchema, Produto
 from schemas.user_schema import  UsuarioInfoSchema
 from models import Usuario
 from schemas.order_schema import OrderSchema, OrderResultSchema
-from services.order_service import criar_ordem_service
+from services.order_service import OrderService
 
 
 
@@ -92,9 +92,9 @@ def get_colecoes(
     return colecoes
 
 @router.post("/new_order", response_model=OrderResultSchema)
-def criar_ordem_endpoint(order_data: OrderSchema, db: Session = Depends(get_db)):
+def new_order(order_data: OrderSchema, db: Session = Depends(get_db)):
     try:
-        nova_ordem = criar_ordem_service(order_data, db)  # Passando db para o serviço
+        nova_ordem = OrderService.new_ordem(order_data, db)
         return nova_ordem
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
