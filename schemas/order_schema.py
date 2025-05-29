@@ -5,9 +5,16 @@ class OrderSchema(BaseModel):
     cd_usuario: str
     vl_total_ordem: float
     qtd_total_produto: int
+    lista_produtos: list
 
     class Config:
         from_attributes = True
+
+class OrdemProdutoSchema(BaseModel):
+    id_ordem: int
+    id_produto: int
+    qtd_produto: int
+    vl_produto_venda: float
 
 class OrderResultSchema(BaseModel):
     id_ordem: int

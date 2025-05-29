@@ -62,3 +62,11 @@ class Order(Base):
     vl_total_ordem = Column(Float, nullable=False)
     qtd_total_produto = Column(Integer, nullable=False)
     dt_ordem = Column(DateTime, nullable=False)
+
+class OrderProduct(Base):
+    __tablename__ = 'T_ORDEM_PRODUTO'
+
+    id_ordem = Column(Integer)
+    id_produto = Column(Integer)
+    qtd_produto = Column(Integer)
+    vl_produto_venda = Column(Float)
