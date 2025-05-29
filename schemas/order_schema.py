@@ -1,11 +1,12 @@
 from pydantic import BaseModel
 from datetime import datetime
+from models import Produtos
 
 class OrderSchema(BaseModel):
     cd_usuario: str
     vl_total_ordem: float
     qtd_total_produto: int
-    lista_produtos: list
+    lista_produtos: list[Produtos]
 
     class Config:
         from_attributes = True

@@ -2,7 +2,7 @@ from datetime import datetime
 import pytz
 from schemas.order_schema import OrderSchema
 from repositories.order_repository import OrderRepository
-from models import Order
+from models import Order, OrderProduct, Produtos
 from sqlalchemy.orm import Session
 
 
@@ -21,5 +21,14 @@ class OrderService:
         )
 
         ordem_criada = OrderRepository.criar_ordem(db, nova_ordem)
+
+        # for produto in order_data.lista_produtos:
+        #     nova_ordem_produto = OrderProduct(
+        #         id_ordem = ordem_criada.id_ordem,
+        #         id_produto = produto.id_produto,
+        #         qtd_produto = 
+        #     )
+
+
 
         return ordem_criada
