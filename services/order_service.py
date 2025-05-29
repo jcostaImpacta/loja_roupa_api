@@ -22,12 +22,15 @@ class OrderService:
 
         ordem_criada = OrderRepository.criar_ordem(db, nova_ordem)
 
-        # for produto in order_data.lista_produtos:
-        #     nova_ordem_produto = OrderProduct(
-        #         id_ordem = ordem_criada.id_ordem,
-        #         id_produto = produto.id_produto,
-        #         qtd_produto = 
-        #     )
+        for produto in order_data.lista_produtos:
+            nova_ordem_produto = OrderProduct(
+                id_ordem = ordem_criada.id_ordem,
+                id_produto = produto.id,
+                qtd_produto = produto.qtd_total,
+                vl_produto_venda = produto.valor
+            )
+
+            ordem_produto_criada = OrderRepository.criar_ordem_produto(db, nova_ordem_produto)
 
 
 

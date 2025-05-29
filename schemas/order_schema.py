@@ -6,7 +6,7 @@ class OrderSchema(BaseModel):
     cd_usuario: str
     vl_total_ordem: float
     qtd_total_produto: int
-    lista_produtos: list[Produtos]
+    lista_produtos: list
 
     class Config:
         from_attributes = True

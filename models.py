@@ -75,5 +75,5 @@ class OrderProduct(Base):
         PrimaryKeyConstraint('id_ordem', 'id_produto'),
     )
 
-    ordem = relationship("Order", backref="produtos_ordem")
-    produto = relationship("Produtos", backref="ordens_produto")
+    # ordem = relationship("Order", backref="produtos_ordem")
+    # produto = relationship("Produtos", backref="ordens_produto")
