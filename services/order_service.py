@@ -2,6 +2,7 @@ from datetime import datetime
 import pytz
 from schemas.order_schema import OrderSchema
 from repositories.order_repository import OrderRepository
+from repositories.product_repository import ProductRepository
 from models import Order, OrderProduct, Produtos
 from sqlalchemy.orm import Session
 
@@ -25,12 +26,22 @@ class OrderService:
         for produto in order_data.lista_produtos:
             nova_ordem_produto = OrderProduct(
                 id_ordem = ordem_criada.id_ordem,
-                id_produto = produto.id,
-                qtd_produto = produto.qtd_total,
-                vl_produto_venda = produto.valor
+                id_produto = produto["id"],
+                qtd_produto = produto["qtd_total"],
+                vl_produto_venda = produto["valor"]
             )
 
-            ordem_produto_criada = OrderRepository.criar_ordem_produto(db, nova_ordem_produto)
+            OrderRepository.criar_ordem_produto(db, nova_ordem_produto)
+            produto_update = Produtos(
+                id_produto = produto["id"],
+                qtd_produto = produto["qtd_estoque"] - produto["qtd_total"],
+            )
+
+            ProductRepository.update_product(db,produto_update)
+
+
+
+
 
 
 

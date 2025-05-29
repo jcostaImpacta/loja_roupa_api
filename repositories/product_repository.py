@@ -66,4 +66,9 @@ class ProductRepository:
             "preco_min": faixa.preco_min,
             "preco_max": faixa.preco_max
     }
-            
+
+    @staticmethod
+    def update_product(db: Session, produto: Produtos):
+        db.add(produto)
+        db.commit() 
+        return produto
