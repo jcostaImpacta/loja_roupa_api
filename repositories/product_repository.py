@@ -69,6 +69,15 @@ class ProductRepository:
 
     @staticmethod
     def update_product(db: Session, produto: Produtos):
-        db.add(produto)
-        db.commit() 
-        return produto
+
+        produto_existente = db.query(Produtos).filter_by(id_produto=produto.id_produto).first()
+        
+        if not produto_existente:
+            raise Exception("Produto não encontrado")
+        
+        produto_existente.qtd_produto = produto.qtd_produto
+
+        db.commit()
+        db.refresh(produto_existente)
+
+        return produto_existente
