@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, Numeric, String, Float, ForeignKey, DECIMAL
+from sqlalchemy import Boolean, Column, Integer, Numeric, String, Float, ForeignKey, DECIMAL, PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import DateTime
@@ -62,3 +62,18 @@ class Order(Base):
     vl_total_ordem = Column(Float, nullable=False)
     qtd_total_produto = Column(Integer, nullable=False)
     dt_ordem = Column(DateTime, nullable=False)
+
+class OrderProduct(Base):
+    __tablename__ = 'T_ORDEM_PRODUTO'
+
+    id_ordem = Column(Integer)
+    id_produto = Column(Integer)
+    qtd_produto = Column(Integer)
+    vl_produto_venda = Column(Float)
+
+    __table_args__ = (
+        PrimaryKeyConstraint('id_ordem', 'id_produto'),
+    )
+
+    # ordem = relationship("Order", backref="produtos_ordem")
+    # produto = relationship("Produtos", backref="ordens_produto")
