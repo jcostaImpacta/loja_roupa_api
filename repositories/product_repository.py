@@ -66,4 +66,18 @@ class ProductRepository:
             "preco_min": faixa.preco_min,
             "preco_max": faixa.preco_max
     }
-            
+
+    @staticmethod
+    def update_qtd_produto(db: Session, produto: Produtos):
+
+        produto_existente = db.query(Produtos).filter_by(id_produto=produto.id_produto).first()
+        
+        if not produto_existente:
+            raise Exception("Produto não encontrado")
+        
+        produto_existente.qtd_produto = produto.qtd_produto
+
+        db.commit()
+        db.refresh(produto_existente)
+
+        return produto_existente
