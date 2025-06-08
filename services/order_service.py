@@ -26,23 +26,17 @@ class OrderService:
         for produto in order_data.lista_produtos:
             nova_ordem_produto = OrderProduct(
                 id_ordem = ordem_criada.id_ordem,
-                id_produto = produto["id"],
+                id_produto = produto["id_produto"],
                 qtd_produto = produto["qtd_total"],
-                vl_produto_venda = produto["valor"]
+                vl_produto_venda = produto["vl_produto"]
             )
 
             OrderRepository.criar_ordem_produto(db, nova_ordem_produto)
             produto_update = Produtos(
-                id_produto = produto["id"],
-                qtd_produto = produto["qtd_estoque"] - produto["qtd_total"],
+                id_produto = produto["id_produto"],
+                qtd_produto = produto["qtd_produto"] - produto["qtd_total"],
             )
 
-            ProductRepository.update_product(db,produto_update)
-
-
-
-
-
-
+            ProductRepository.update_qtd_produto(db,produto_update)
 
         return ordem_criada

@@ -68,7 +68,7 @@ class ProductRepository:
     }
 
     @staticmethod
-    def update_product(db: Session, produto: Produtos):
+    def update_qtd_produto(db: Session, produto: Produtos):
 
         produto_existente = db.query(Produtos).filter_by(id_produto=produto.id_produto).first()
         
